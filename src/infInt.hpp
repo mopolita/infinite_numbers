@@ -5,20 +5,22 @@
 namespace inf{
 	class InfInt{
 	private:
-		list<uint8_t> value;
+		std::list<uint8_t> value;
 		bool positive;
 	public:
 		InfInt() = default;
-		InfInt(double nb);
+		InfInt(int64_t nb);
 		// display func
-		friend std::ostream& operator<<(std::ostream &os, const infInt &nb);
+		friend std::ostream& operator<<(std::ostream &os, const InfInt &nb);
 		// four basic operations
-		friend infInt operator+(const infInt &nb1, const infInt &nb2);
-		friend infInt operator-(const infInt &nb1, const infInt &nb2);
-		friend infInt operator*(const infInt &nb1, const infInt &nb2);
-		friend infInt operator/(const infInt &nb1, const infInt &nb2);
+		friend InfInt operator+(const InfInt &nb1, const InfInt &nb2);
+		friend InfInt operator-(const InfInt &nb1, const InfInt &nb2);
+		friend InfInt operator*(const InfInt &nb1, const InfInt &nb2);
+		friend InfInt operator/(const InfInt &nb1, const InfInt &nb2);
 		// comparison operators
-		friend auto operator<=>(const infInt& nb2, const infInt &nb1);
+		friend std::strong_ordering operator<=>(const InfInt& nb1, const InfInt &nb2);
+		friend bool operator==(const InfInt& nb1, const InfInt &nb2);
+		friend bool operator!=(const InfInt& nb1, const InfInt &nb2);
 	};
 }
 
