@@ -3,13 +3,14 @@
 
 
 namespace inf{
-	class InfInt{
+	class InfInt final{
 	private:
 		std::list<uint8_t> value;
 		bool positive;
 	public:
 		InfInt() = default;
 		InfInt(int64_t nb);
+		InfInt abs() const;
 		// display func
 		friend std::ostream& operator<<(std::ostream &os, const InfInt &nb);
 		// four basic operations

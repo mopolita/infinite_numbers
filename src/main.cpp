@@ -25,8 +25,22 @@ void testCompare(){
 	std::cout << "val1 >= val2 : " << (val1 >= val2) << std::endl;
 }
 
+void testPlusMinus(){
+	InfInt val1{1};
+	InfInt val2{2};
+	InfInt val3{-3};
+	std::cout << "val1 : " << val1 << std::endl;
+	std::cout << "val2 : " << val2 << std::endl;
+	std::cout << "val3 : " << val3 << std::endl;
+	std::cout << "val1 + val2 : " << val1 + val2 << std::endl;
+	std::cout << "val1 - val2 : " << val1 - val2 << std::endl;
+	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
+	std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
+}
+
 int main(){
 	//testCout();
-	testCompare();
+	//testCompare();
+	testPlusMinus();
 	return 0;
 }

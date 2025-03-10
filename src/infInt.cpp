@@ -21,6 +21,12 @@ namespace inf{
 		}
 	}
 
+	InfInt InfInt::abs() const {
+		InfInt result = *this;
+		result.positive = true;
+		return result;
+	}
+
 	std::ostream& operator<<(std::ostream &os, const InfInt &nb) {
 		if (!nb.positive) os << '-';
 
@@ -29,6 +35,87 @@ namespace inf{
 		}
 		
 		return os;
+	}
+
+	InfInt operator+(const InfInt &nb1, const InfInt &nb2){
+		InfInt result;
+		if (nb1.positive == nb2.positive) {
+			result.positive = nb1.positive;
+			auto it1 = nb1.value.rbegin();
+			auto it2 = nb2.value.rbegin();
+			uint8_t carry = 0;
+			while (it1 != nb1.value.rend() || it2 != nb2.value.rend() || carry) {
+				uint8_t sum = carry;
+				if (it1 != nb1.value.rend()) {
+					sum += *it1;
+					++it1;
+				}
+				if (it2 != nb2.value.rend()) {
+					sum += *it2;
+					++it2;
+				}
+				carry = sum / 10;
+				result.value.push_front(sum % 10);
+			}
+		}
+		else {
+			InfInt absnb1 = nb1.abs();
+			InfInt absnb2 = nb2.abs();
+			if (absnb1 < absnb2) {
+				result = absnb2 - absnb1;
+				result.positive = nb2.positive;
+			}
+			else {
+				result = absnb1 - absnb2;
+				result.positive = nb1.positive;
+			}
+		}
+		return result;
+	}
+
+	InfInt operator-(const InfInt &nb1, const InfInt &nb2){
+		InfInt result;
+		if (nb1.positive == nb2.positive) {
+			if (nb1 > nb2) {
+				result.positive = nb1.positive;
+				auto it1 = nb1.value.rbegin();
+				auto it2 = nb2.value.rbegin();
+				uint8_t carry = 0;
+				while (it1 != nb1.value.rend() || it2 != nb2.value.rend() || carry) {
+					uint8_t diff = carry;
+					if (it1 != nb1.value.rend()) {
+						diff += *it1;
+						++it1;
+					}
+					if (it2 != nb2.value.rend()) {
+						diff -= *it2;
+						++it2;
+					}
+					if (diff < 0) {
+						diff += 10;
+						carry = 1;
+					}
+					else carry = 0;
+					result.value.push_front(diff);
+				}
+			}
+			else {
+				result = nb2 - nb1;
+				result.positive = !nb1.positive;
+			}
+		}
+		else {
+			result = nb1.abs() + nb2.abs();
+		}
+		return result;
+	}
+
+	InfInt operator*(const InfInt &nb1, const InfInt &nb2){
+
+	}
+
+	InfInt operator/(const InfInt &nb1, const InfInt &nb2){
+
 	}
 
 
