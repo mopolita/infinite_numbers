@@ -26,14 +26,15 @@ void testCompare(){
 }
 
 void testPlusMinus(){
-	InfInt val1{1};
-	InfInt val2{2};
-	InfInt val3{-3};
+	InfInt val1{15};
+	InfInt val2{42};
+	InfInt val3{-30};
 	std::cout << "val1 : " << val1 << std::endl;
 	std::cout << "val2 : " << val2 << std::endl;
 	std::cout << "val3 : " << val3 << std::endl;
 	std::cout << "val1 + val2 : " << val1 + val2 << std::endl;
 	std::cout << "val1 - val2 : " << val1 - val2 << std::endl;
+	std::cout << "val2 - val1 : " << val2 - val1 << std::endl;
 	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
 	std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
 }

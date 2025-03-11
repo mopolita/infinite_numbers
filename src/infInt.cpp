@@ -73,6 +73,27 @@ namespace inf{
 		return result;
 	}
 
+	/* what i want to do :
+	if (a and b are different signs){
+		sign of result is sign of a
+		value of result is abs value of a + abs value of b
+	}
+	else{
+		if (abs of a > abs of b){
+			sign of result is sign of a
+			starting with the last number till the first (rbegin -> to rend)
+			add the carry to b
+			set the carry to 0
+			if the number of a is bigger just do (nb1 - nb2), else do (nb1+10 - nb2 and add 1 to the carry)
+			push the number to the front of result
+		}
+		else{
+			sign of result is sign of b
+			same thing than before, but invert a and b
+		}
+	}
+
+	*/
 	InfInt operator-(const InfInt &nb1, const InfInt &nb2){
 		InfInt result;
 		if (nb1.positive == nb2.positive) {
