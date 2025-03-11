@@ -35,8 +35,11 @@ void testPlusMinus(){
 	std::cout << "val1 + val2 : " << val1 + val2 << std::endl;
 	std::cout << "val1 - val2 : " << val1 - val2 << std::endl;
 	std::cout << "val2 - val1 : " << val2 - val1 << std::endl;
+	std::cout << "val1 - val1 : " << val1 - val1 << std::endl;
 	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
 	std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
+	std::cout << "val3 + val3 : " << val3 + val3 << std::endl;
+	std::cout << "val3 - val3 : " << val3 - val3 << std::endl;
 }
 
 int main(){

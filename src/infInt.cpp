@@ -9,12 +9,11 @@ namespace inf{
 
 	InfInt::InfInt(int64_t nb) : value{}, positive{} {
 		positive = nb >= 0;
-		if (!positive) nb = -nb;
 		if (nb == 0) {
 			value.push_back(0);  // Cas particulier pour 0
 			return;
 		}
-
+		if (!positive) nb = -nb;
 		while (nb > 0) {
 			value.push_front(nb % 10);  // Ajout en début pour garder l’ordre
 			nb /= 10;
@@ -22,142 +21,145 @@ namespace inf{
 	}
 
 	InfInt InfInt::abs() const {
-		InfInt result = *this;
-		result.positive = true;
-		return result;
+		if (!positive) return -*this;
+		return *this;
 	}
 
 	std::ostream& operator<<(std::ostream &os, const InfInt &nb) {
 		if (!nb.positive) os << '-';
-
 		for (auto it = nb.value.begin(); it != nb.value.end(); ++it) {
 			os << static_cast<int>(*it);
 		}
-		
 		return os;
 	}
 
-	InfInt operator+(const InfInt &nb1, const InfInt &nb2){
+	InfInt operator+(const InfInt &a, const InfInt &b) {
 		InfInt result;
-		if (nb1.positive == nb2.positive) {
-			result.positive = nb1.positive;
-			auto it1 = nb1.value.rbegin();
-			auto it2 = nb2.value.rbegin();
+		if (a.positive == b.positive) {
+			// Case: Same signs, simply add their absolute values
+			result.positive = a.positive;
+			auto ita = a.value.rbegin();
+			auto itb = b.value.rbegin();
 			uint8_t carry = 0;
-			while (it1 != nb1.value.rend() || it2 != nb2.value.rend() || carry) {
-				uint8_t sum = carry;
-				if (it1 != nb1.value.rend()) {
-					sum += *it1;
-					++it1;
+			uint8_t sum = 0;
+
+			while (ita != a.value.rend() || itb != b.value.rend() || carry) {
+				sum = carry;
+				if (ita != a.value.rend()) {
+					sum += *ita;
+					++ita;
 				}
-				if (it2 != nb2.value.rend()) {
-					sum += *it2;
-					++it2;
+				if (itb != b.value.rend()) {
+					sum += *itb;
+					++itb;
 				}
 				carry = sum / 10;
 				result.value.push_front(sum % 10);
 			}
-		}
-		else {
-			InfInt absnb1 = nb1.abs();
-			InfInt absnb2 = nb2.abs();
-			if (absnb1 < absnb2) {
-				result = absnb2 - absnb1;
-				result.positive = nb2.positive;
-			}
-			else {
-				result = absnb1 - absnb2;
-				result.positive = nb1.positive;
+		} else {
+			// Case: Different signs, subtract the absolute values
+			InfInt absa = a.abs();
+			InfInt absb = b.abs();
+
+			if (absa > absb) {
+				result = absa - absb;
+				result.positive = a.positive;
+			} else if (absa < absb) {
+				result = absb - absa;
+				result.positive = b.positive;
+			} else {
+				result.positive = true;  // When both have same absolute value, the result is 0
+				result.value.push_back(0);
 			}
 		}
 		return result;
 	}
-
-	/* what i want to do :
-	if (a and b are different signs){
-		sign of result is sign of a
-		value of result is abs value of a + abs value of b
-	}
-	else{
-		if (abs of a > abs of b){
-			sign of result is sign of a
-			starting with the last number till the first (rbegin -> to rend)
-			add the carry to b
-			set the carry to 0
-			if the number of a is bigger just do (nb1 - nb2), else do (nb1+10 - nb2 and add 1 to the carry)
-			push the number to the front of result
-		}
-		else{
-			sign of result is sign of b
-			same thing than before, but invert a and b
-		}
-	}
-
-	*/
-	InfInt operator-(const InfInt &nb1, const InfInt &nb2){
+	
+	InfInt operator-(const InfInt &a, const InfInt &b) {
 		InfInt result;
-		if (nb1.positive == nb2.positive) {
-			if (nb1 > nb2) {
-				result.positive = nb1.positive;
-				auto it1 = nb1.value.rbegin();
-				auto it2 = nb2.value.rbegin();
-				uint8_t carry = 0;
-				while (it1 != nb1.value.rend() || it2 != nb2.value.rend() || carry) {
-					uint8_t diff = carry;
-					if (it1 != nb1.value.rend()) {
-						diff += *it1;
-						++it1;
-					}
-					if (it2 != nb2.value.rend()) {
-						diff -= *it2;
-						++it2;
-					}
-					if (diff < 0) {
-						diff += 10;
-						carry = 1;
-					}
-					else carry = 0;
-					result.value.push_front(diff);
+
+		// Case 1: Different signs, treat as addition of abs values
+		if (a.positive != b.positive) {
+			result.positive = a.positive;
+			result = a.abs() + b.abs();  // Use the addition operator
+			return result;
+		}
+
+		// Case 2: Same values, return 0
+		if (a.abs() == b.abs()) {
+			result.positive = true;
+			result.value.push_back(0); // 0 result
+			return result;
+		}
+
+		// Case 3: Absolute value of a bigger than absolute value of b, handle subtraction based on absolute values
+		if (a.abs() > b.abs()) {
+			result.positive = !a.positive; // Flip the sign since a's absolute value is greater
+			auto ita = a.value.rbegin();
+			auto itb = b.value.rbegin();
+			uint8_t borrow = 0;
+
+			while (itb != b.value.rend()) {
+				int diff = *ita - *itb - borrow;
+				if (diff < 0) {
+					diff += 10;
+					borrow = 1;  // Borrow when result is negative
+				} else {
+					borrow = 0;
 				}
+				result.value.push_back(diff);
+				++ita;
+				++itb;
 			}
-			else {
-				result = nb2 - nb1;
-				result.positive = !nb1.positive;
+
+			// Handle the remaining digits of 'a' after 'b' is exhausted
+			while (ita != a.value.rend()) {
+				int diff = *ita - borrow;
+				if (diff < 0) {
+					diff += 10;
+					borrow = 1;
+				} else {
+					borrow = 0;
+				}
+				result.value.push_back(diff);
+				++ita;
 			}
 		}
+		// Case 4: If abs(b) > abs(a), reverse the order
 		else {
-			result = nb1.abs() + nb2.abs();
+			result = b.abs() - a.abs();
+			result.positive = a.positive;  // Sign is same as 'a'
 		}
+
+		// Remove leading zeros (if any)
+		while (result.value.size() > 1 && result.value.front() == 0) {
+			result.value.pop_front();
+		}
+
 		return result;
 	}
 
-	InfInt operator*(const InfInt &nb1, const InfInt &nb2){
+    // Unary negation operator
+    InfInt operator-(const InfInt& a) {
+        InfInt result = a;
+        result.positive = !a.positive; // Flip the sign
+        return result;
+    }
 
+	InfInt operator*(const InfInt &a, const InfInt &b){
+		//TODO
 	}
 
-	InfInt operator/(const InfInt &nb1, const InfInt &nb2){
-
+	InfInt operator/(const InfInt &a, const InfInt &b){
+		//TODO
 	}
-
 
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
-    	
-		if (a.positive == b.positive) {
-			return std::lexicographical_compare_three_way(
-        		a.value.rbegin(), a.value.rend(),
-        		b.value.rbegin(), b.value.rend()
-    		);
-		}
-		else {
-			return a.positive <=> b.positive;
-		}
-	}
 
-	bool operator==(const InfInt& a, const InfInt& b) {
-		return a <=> b == 0;
-	}
-
-	bool operator!=(const InfInt& a, const InfInt& b) {
-		return a <=> b != 0;
+		if (a.positive != b.positive) return a.positive <=> b.positive;
+		return std::lexicographical_compare_three_way(
+    		a.value.rbegin(), a.value.rend(),
+        	b.value.rbegin(), b.value.rend()
+		);
 	}
 }

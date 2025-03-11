@@ -13,15 +13,16 @@ namespace inf{
 		InfInt abs() const;
 		// display func
 		friend std::ostream& operator<<(std::ostream &os, const InfInt &nb);
-		// four basic operations
-		friend InfInt operator+(const InfInt &nb1, const InfInt &nb2);
-		friend InfInt operator-(const InfInt &nb1, const InfInt &nb2);
-		friend InfInt operator*(const InfInt &nb1, const InfInt &nb2);
-		friend InfInt operator/(const InfInt &nb1, const InfInt &nb2);
+		// basic operations
+		friend InfInt operator+(const InfInt &a, const InfInt &b);
+		friend InfInt operator-(const InfInt& a);
+		friend InfInt operator-(const InfInt &a, const InfInt &b);
+		friend InfInt operator*(const InfInt &a, const InfInt &b);
+		friend InfInt operator/(const InfInt &a, const InfInt &b);
 		// comparison operators
-		friend std::strong_ordering operator<=>(const InfInt& nb1, const InfInt &nb2);
-		friend bool operator==(const InfInt& nb1, const InfInt &nb2);
-		friend bool operator!=(const InfInt& nb1, const InfInt &nb2);
+		friend std::strong_ordering operator<=>(const InfInt& a, const InfInt &b);
+		friend bool operator==(const InfInt& a, const InfInt &b) { return a <=> b == 0; }
+		friend bool operator!=(const InfInt& a, const InfInt &b) { return a <=> b != 0; }
 	};
 }
 
