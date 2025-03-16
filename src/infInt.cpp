@@ -7,10 +7,9 @@
 
 namespace inf{
 
-	InfInt::InfInt(int64_t nb) : value{}, positive{} {
-		positive = nb >= 0;
+	InfInt::InfInt(int64_t nb) : value{}, positive{nb >= 0} {
 		if (nb == 0) {
-			value.push_back(0);  // Cas particulier pour 0
+			value.push_back(0);
 			return;
 		}
 		if (!positive) nb = -nb;
@@ -25,6 +24,12 @@ namespace inf{
 		return *this;
 	}
 
+	void InfInt::removeLeadingZeros(){
+		while (value.size() > 1 && value.front() == 0) {
+			value.pop_front();
+		}
+	}
+
 	std::ostream& operator<<(std::ostream &os, const InfInt &nb) {
 		if (!nb.positive) os << '-';
 		for (auto it = nb.value.begin(); it != nb.value.end(); ++it) {
@@ -35,8 +40,9 @@ namespace inf{
 
 	InfInt operator+(const InfInt &a, const InfInt &b) {
 		InfInt result;
-		if (a.positive == b.positive) {
-			// Case: Same signs, simply add their absolute values
+		
+		// Case: Same signs, simply add their absolute values
+		if (a.positive == b.positive) {	
 			result.positive = a.positive;
 			auto ita = a.value.rbegin();
 			auto itb = b.value.rbegin();
@@ -56,58 +62,41 @@ namespace inf{
 				carry = sum / 10;
 				result.value.push_front(sum % 10);
 			}
-		} else {
-			// Case: Different signs, subtract the absolute values
-			InfInt absa = a.abs();
-			InfInt absb = b.abs();
-
-			if (absa > absb) {
-				result = absa - absb;
-				result.positive = a.positive;
-			} else if (absa < absb) {
-				result = absb - absa;
-				result.positive = b.positive;
-			} else {
-				result.positive = true;  // When both have same absolute value, the result is 0
-				result.value.push_back(0);
-			}
+			return result;
 		}
-		return result;
+
+		// Case: Different signs, subtract the absolute values
+		return a.abs() - b.abs();
 	}
-	
+
 	InfInt operator-(const InfInt &a, const InfInt &b) {
 		InfInt result;
 
-		// Case 1: Different signs, treat as addition of abs values
+		// Case 1: Same values, return 0
+		if (a.abs() == b.abs()) return InfInt{0};
+
+		// Case 2: Different signs, treat as addition of abs values
 		if (a.positive != b.positive) {
+			result = a.abs() + b.abs();
 			result.positive = a.positive;
-			result = a.abs() + b.abs();  // Use the addition operator
 			return result;
 		}
 
-		// Case 2: Same values, return 0
-		if (a.abs() == b.abs()) {
-			result.positive = true;
-			result.value.push_back(0); // 0 result
-			return result;
-		}
-
-		// Case 3: Absolute value of a bigger than absolute value of b, handle subtraction based on absolute values
+		// Case 3: Absolute value of a is bigger than absolute value of b, handle subtraction based on absolute values
 		if (a.abs() > b.abs()) {
-			result.positive = !a.positive; // Flip the sign since a's absolute value is greater
+			result.positive = !a.positive;
 			auto ita = a.value.rbegin();
 			auto itb = b.value.rbegin();
 			uint8_t borrow = 0;
 
 			while (itb != b.value.rend()) {
-				int diff = *ita - *itb - borrow;
+				int diff = *ita - (*itb + borrow);
 				if (diff < 0) {
 					diff += 10;
-					borrow = 1;  // Borrow when result is negative
-				} else {
-					borrow = 0;
-				}
-				result.value.push_back(diff);
+					borrow = 1;
+				} 
+				else borrow = 0;
+				result.value.push_front(diff);
 				++ita;
 				++itb;
 			}
@@ -118,24 +107,20 @@ namespace inf{
 				if (diff < 0) {
 					diff += 10;
 					borrow = 1;
-				} else {
-					borrow = 0;
 				}
-				result.value.push_back(diff);
+				else borrow = 0;
+				result.value.push_front(diff);
 				++ita;
 			}
 		}
+
 		// Case 4: If abs(b) > abs(a), reverse the order
 		else {
 			result = b.abs() - a.abs();
 			result.positive = a.positive;  // Sign is same as 'a'
 		}
 
-		// Remove leading zeros (if any)
-		while (result.value.size() > 1 && result.value.front() == 0) {
-			result.value.pop_front();
-		}
-
+		result.removeLeadingZeros();
 		return result;
 	}
 

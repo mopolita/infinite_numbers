@@ -7,6 +7,7 @@ namespace inf{
 	private:
 		std::list<uint8_t> value;
 		bool positive;
+		void removeLeadingZeros();
 	public:
 		InfInt() = default;
 		InfInt(int64_t nb);

@@ -25,26 +25,42 @@ void testCompare(){
 	std::cout << "val1 >= val2 : " << (val1 >= val2) << std::endl;
 }
 
-void testPlusMinus(){
+void testPlus(){
 	InfInt val1{15};
-	InfInt val2{42};
+	InfInt val2{40};
 	InfInt val3{-30};
 	std::cout << "val1 : " << val1 << std::endl;
 	std::cout << "val2 : " << val2 << std::endl;
 	std::cout << "val3 : " << val3 << std::endl;
 	std::cout << "val1 + val2 : " << val1 + val2 << std::endl;
+	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
+	std::cout << "val3 + val3 : " << val3 + val3 << std::endl;
+}
+
+void testMinus(){
+	InfInt val1{15};
+	InfInt val2{40};
+	InfInt val3{-30};
+	InfInt val4{-15};
+	std::cout << "val1 : " << val1 << std::endl;
+	std::cout << "val2 : " << val2 << std::endl;
+	std::cout << "val3 : " << val3 << std::endl;
+	std::cout << "val4 : " << val4 << std::endl;
 	std::cout << "val1 - val2 : " << val1 - val2 << std::endl;
 	std::cout << "val2 - val1 : " << val2 - val1 << std::endl;
-	std::cout << "val1 - val1 : " << val1 - val1 << std::endl;
-	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
-	std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
-	std::cout << "val3 + val3 : " << val3 + val3 << std::endl;
-	std::cout << "val3 - val3 : " << val3 - val3 << std::endl;
+	// Commented tests that works
+	//std::cout << "val1 - val1 : " << val1 - val1 << std::endl;
+	//std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
+	//std::cout << "val3 - val3 : " << val3 - val3 << std::endl;
+	//std::cout << "val3 - val1 : " << val3 - val1 << std::endl;
+	std::cout << "val3 - val4 : " << val3 - val4 << std::endl;
+	std::cout << "val4 - val3 : " << val4 - val3 << std::endl;
 }
 
 int main(){
 	//testCout();
 	//testCompare();
-	testPlusMinus();
+	//testPlus();
+	testMinus();
 	return 0;
 }
