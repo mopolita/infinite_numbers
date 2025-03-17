@@ -90,7 +90,7 @@ int main(){
 	//testCout();
 	//testAbs();
 	//testCompare();
-	//testPlus();
+	testPlus();
 	testMinus();
 	return 0;
 }
