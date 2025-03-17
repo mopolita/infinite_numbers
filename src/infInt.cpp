@@ -189,7 +189,13 @@ namespace inf{
 	}
 
 	InfInt operator/(const InfInt &a, const InfInt &b){
-		// TODO
+		if (b == InfInt{0}) throw DivisionByZeroError{};
+		if (a == InfInt{0}) return InfInt{0};
+		
+		if (b == InfInt{1}) return a;
+		if (b == InfInt{-1}) return -a;
+
+		InfInt result;
 	}
 
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
