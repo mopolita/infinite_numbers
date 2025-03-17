@@ -133,11 +133,12 @@ namespace inf{
     }
 
 	InfInt operator*(const InfInt &a, const InfInt &b){
-		//TODO
+		// use the method learned in primary school (requires a InfInt * int_64t)
+		// TODO
 	}
 
 	InfInt operator/(const InfInt &a, const InfInt &b){
-		//TODO
+		// TODO
 	}
 
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
