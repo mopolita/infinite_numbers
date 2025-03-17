@@ -196,6 +196,29 @@ namespace inf{
 		if (b == InfInt{-1}) return -a;
 
 		InfInt result;
+		result.positive = (a.positive == b.positive);
+		InfInt a_temp = a.abs(), b_temp = b.abs();
+		InfInt temp;
+		InfInt remainder = InfInt{0};
+
+		for (auto it = a_temp.value.begin(); it != a_temp.value.end(); ++it) {
+			remainder = remainder * 10 + *it;
+			if (remainder < b_temp) {
+				result.value.push_back(0);
+				continue;
+			}
+
+			int64_t quotient = 0;
+			while (remainder >= b_temp) {
+				remainder = remainder - b_temp;
+				quotient++;
+			}
+			result.value.push_back(quotient);
+		}
+
+		result.removeLeadingZeros();
+		if (result == InfInt{0}) result.positive = true;
+		return result;
 	}
 
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
