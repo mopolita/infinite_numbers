@@ -73,7 +73,7 @@ namespace inf{
 		InfInt result;
 
 		// Case 1: Same values, return 0
-		if (a.abs() == b.abs()) return InfInt{0};
+		if (a == b) return InfInt{0};
 
 		// Case 2: Different signs, treat as addition of abs values
 		if (a.positive != b.positive) {
@@ -84,26 +84,27 @@ namespace inf{
 
 		// Case 3: Absolute value of a is bigger than absolute value of b, handle subtraction based on absolute values
 		if (a.abs() > b.abs()) {
-			result.positive = !a.positive;
+			int borrow = 0, diff = 0;
+			result.positive = a.positive;
 			auto ita = a.value.rbegin();
 			auto itb = b.value.rbegin();
-			uint8_t borrow = 0;
 
 			while (itb != b.value.rend()) {
-				int diff = *ita - (*itb + borrow);
+				diff = *ita - (*itb + borrow);
 				if (diff < 0) {
 					diff += 10;
 					borrow = 1;
-				} 
+				}
 				else borrow = 0;
 				result.value.push_front(diff);
-				++ita;
-				++itb;
+				
+				ita++;
+				itb++;
 			}
 
 			// Handle the remaining digits of 'a' after 'b' is exhausted
 			while (ita != a.value.rend()) {
-				int diff = *ita - borrow;
+				diff = *ita - borrow;
 				if (diff < 0) {
 					diff += 10;
 					borrow = 1;
@@ -115,9 +116,9 @@ namespace inf{
 		}
 
 		// Case 4: If abs(b) > abs(a), reverse the order
-		else {
-			result = b.abs() - a.abs();
-			result.positive = a.positive;  // Sign is same as 'a'
+		if (b.abs() > a.abs()) {
+			result = b - a;
+			result.positive = !result.positive;  // Sign is same as 'a'
 		}
 
 		result.removeLeadingZeros();
@@ -143,8 +144,8 @@ namespace inf{
 
 		if (a.positive != b.positive) return a.positive <=> b.positive;
 		return std::lexicographical_compare_three_way(
-    		a.value.rbegin(), a.value.rend(),
-        	b.value.rbegin(), b.value.rend()
+    		a.value.begin(), a.value.end(),
+        	b.value.begin(), b.value.end()
 		);
 	}
 }
