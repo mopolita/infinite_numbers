@@ -116,7 +116,7 @@ namespace inf{
 		}
 
 		// Case 4: If abs(b) > abs(a), reverse the order
-		if (b.abs() > a.abs()) {
+		else {
 			result = b - a;
 			result.positive = !result.positive;  // Sign is same as 'a'
 		}
