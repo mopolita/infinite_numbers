@@ -86,11 +86,42 @@ void testMinus(){
 	std::cout << "val3 - val1 : " << val3 - val1 << std::endl;
 }
 
+void testMult(){
+	InfInt val1{15};
+	InfInt val2{40};
+	InfInt val3{-30};
+	InfInt val4{-15};
+	int64_t val5 = 5;
+	int64_t val6 = -5;
+
+	// values
+	std::cout << "val1 : " << val1 << std::endl;
+	std::cout << "val2 : " << val2 << std::endl;
+	std::cout << "val3 : " << val3 << std::endl;
+	std::cout << "val4 : " << val4 << std::endl;
+	std::cout << "val5 : " << val5 << std::endl;
+	std::cout << "val6 : " << val6 << std::endl;
+
+	// same sign
+	std::cout << "val1 * val2 : " << val1 * val2 << std::endl;
+	std::cout << "val3 * val4 : " << val3 * val4 << std::endl;
+
+	// different signs
+	std::cout << "val1 * val3 : " << val1 * val3 << std::endl;
+
+	// with int64_t
+	std::cout << "val1 * val5 : " << val1 * val5 << std::endl;
+	std::cout << "val1 * val6 : " << val1 * val6 << std::endl;
+	std::cout << "val3 * val5 : " << val3 * val5 << std::endl;
+	std::cout << "val3 * val6 : " << val3 * val6 << std::endl;
+}
+
 int main(){
 	//testCout();
 	//testAbs();
 	//testCompare();
-	testPlus();
-	testMinus();
+	//testPlus();
+	//testMinus();
+	testMult();
 	return 0;
 }

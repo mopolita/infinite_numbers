@@ -132,9 +132,60 @@ namespace inf{
         return result;
     }
 
+	InfInt operator*(const InfInt &a, int64_t b){
+		if (a == InfInt{0} || b == 0) return InfInt{0};
+		if (a == InfInt{1}) return InfInt{b};
+		
+		if (b == 1) return a;
+		if (b == -1) return -a;
+
+		InfInt result;
+		int64_t carry = 0;
+		int64_t product = 0;
+
+		if (b < 0) {
+			result.positive = !a.positive;
+			b = -b;
+		}
+		else result.positive = a.positive;
+
+		for (auto it = a.value.rbegin(); it != a.value.rend(); ++it) {
+			product = *it * b + carry;
+			carry = product / 10;
+			result.value.push_front(product % 10);
+		}
+
+		while (carry) {
+			result.value.push_front(carry % 10);
+			carry /= 10;
+		}
+
+		return result;
+	}
+
 	InfInt operator*(const InfInt &a, const InfInt &b){
 		// use the method learned in primary school (requires a InfInt * int_64t)
-		// TODO
+		if (a == InfInt{0} || b == InfInt{0}) return InfInt{0};
+		
+		if (a == InfInt{1}) return b;
+		if (a == InfInt{-1}) return -b;
+		
+		if (b == InfInt{1}) return a;
+		if (b == InfInt{-1}) return -a;
+
+		InfInt result, a_temp = a.abs(), b_temp = b.abs(), temp;
+		int64_t shift = 0;
+
+		result.positive = (a.positive == b.positive);
+
+		for (auto it = b_temp.value.rbegin(); it != b_temp.value.rend(); ++it) {
+			temp = a_temp * (*it);
+			temp.value.insert(temp.value.end(), shift, 0);
+			result = result + temp;
+			shift++;
+		}
+
+		return result;
 	}
 
 	InfInt operator/(const InfInt &a, const InfInt &b){
