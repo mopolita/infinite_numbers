@@ -116,12 +116,41 @@ void testMult(){
 	std::cout << "val3 * val6 : " << val3 * val6 << std::endl;
 }
 
+void testDivision(){
+	InfInt val1{15};
+	InfInt val2{40};
+	InfInt val3{-30};
+	InfInt val4{-15};
+
+	// values
+	std::cout << "val1 : " << val1 << std::endl;
+	std::cout << "val2 : " << val2 << std::endl;
+	std::cout << "val3 : " << val3 << std::endl;
+	std::cout << "val4 : " << val4 << std::endl;
+
+	// same sign
+	std::cout << "val1 / val2 : " << val1 / val2 << std::endl;
+	std::cout << "val3 / val4 : " << val3 / val4 << std::endl;
+
+	// different signs
+	std::cout << "val1 / val3 : " << val1 / val3 << std::endl;
+
+	// division by 0
+	try{
+		std::cout << "val1 / 0 : " << val1 / InfInt{0} << std::endl;
+	}
+	catch(DivisionByZeroError &e){
+		std::cout << e.what() << std::endl;
+	}
+}
+
 int main(){
 	//testCout();
 	//testAbs();
 	//testCompare();
 	//testPlus();
 	//testMinus();
-	testMult();
+	//testMult();
+	testDivision();
 	return 0;
 }
