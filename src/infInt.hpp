@@ -1,11 +1,13 @@
 #ifndef INFINT_HPP
 #define INFINT_HPP
 
+#include <iostream>
+#include <deque>
 
 namespace inf{
 	class InfInt{
 	private:
-		std::list<uint8_t> value;
+		std::deque<uint8_t> value;
 		bool positive;
 		void removeLeadingZeros();
 		InfInt abs() const noexcept;
@@ -29,11 +31,6 @@ namespace inf{
 		friend std::strong_ordering operator<=>(const InfInt& a, const InfInt &b);
 		friend bool operator==(const InfInt& a, const InfInt &b) { return a <=> b == 0; }
 		friend bool operator!=(const InfInt& a, const InfInt &b) { return a <=> b != 0; }
-	};
-
-	class DivisionByZeroError : public std::runtime_error{
-	public:
-		DivisionByZeroError() : std::runtime_error("Division by zero"){}
 	};
 }
 

@@ -1,8 +1,9 @@
 #include <iostream>
-#include <list>
+#include <deque>
 #include <compare>
 #include <iterator>
 #include <cstdint>
+#include "DivisionByZero.hpp"
 #include "infInt.hpp"
 
 namespace inf{

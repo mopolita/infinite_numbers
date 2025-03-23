@@ -1,92 +1,80 @@
 #include <iostream>
-#include <list>
-#include <compare>
-#include <iterator>
 #include <cstdint>
+#include "DivisionByZero.hpp"
 #include "infInt.hpp"
 
+using namespace std;
 using namespace inf;
 
-void testCout(){
+void testCoutDeque(){
 	InfInt val{85};
-	std::cout << "nombre : " << val << std::endl;
+	cout << "nombre : " << val << endl;
 }
 
-void testAbs(){
-	InfInt val1{1};
-	InfInt val2{-2};
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val1.abs() : " << val1.abs() << std::endl;
-	std::cout << "val2.abs() : " << val2.abs() << std::endl;
-	std::cout << "val1.abs() < val2.abs() : " << (val1.abs() < val2.abs()) << std::endl;
-	std::cout << "val1.abs() > val2.abs() : " << (val1.abs() > val2.abs()) << std::endl;
-}
-
-void testCompare(){
+void testComparisonsDeque(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val2 : " << val2 << endl;
 	
 	// same sign
-	std::cout << "val1 == val2 : " << (val1 == val2) << std::endl;
-	std::cout << "val1 != val2 : " << (val1 != val2) << std::endl;
-	std::cout << "val1 < val2 : " << (val1 < val2) << std::endl;
-	std::cout << "val1 > val2 : " << (val1 > val2) << std::endl;
-	std::cout << "val1 <= val2 : " << (val1 <= val2) << std::endl;
-	std::cout << "val1 >= val2 : " << (val1 >= val2) << std::endl;
+	cout << "val1 == val2 : " << (val1 == val2) << endl;
+	cout << "val1 != val2 : " << (val1 != val2) << endl;
+	cout << "val1 < val2 : " << (val1 < val2) << endl;
+	cout << "val1 > val2 : " << (val1 > val2) << endl;
+	cout << "val1 <= val2 : " << (val1 <= val2) << endl;
+	cout << "val1 >= val2 : " << (val1 >= val2) << endl;
 	
 	// different signs
-	std::cout << "val1 == val3 : " << (val1 == val3) << std::endl;
-	std::cout << "val1 != val3 : " << (val1 != val3) << std::endl;
-	std::cout << "val1 < val3 : " << (val1 < val3) << std::endl;
-	std::cout << "val1 > val3 : " << (val1 > val3) << std::endl;
-	std::cout << "val1 <= val3 : " << (val1 <= val3) << std::endl;
-	std::cout << "val1 >= val3 : " << (val1 >= val3) << std::endl;
+	cout << "val1 == val3 : " << (val1 == val3) << endl;
+	cout << "val1 != val3 : " << (val1 != val3) << endl;
+	cout << "val1 < val3 : " << (val1 < val3) << endl;
+	cout << "val1 > val3 : " << (val1 > val3) << endl;
+	cout << "val1 <= val3 : " << (val1 <= val3) << endl;
+	cout << "val1 >= val3 : " << (val1 >= val3) << endl;
 }
 
-void testPlus(){
+void testPlusDeque(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val3 : " << val3 << std::endl;
-	std::cout << "val1 + val2 : " << val1 + val2 << std::endl;
-	std::cout << "val1 + val3 : " << val1 + val3 << std::endl;
-	std::cout << "val3 + val3 : " << val3 + val3 << std::endl;
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val3 : " << val3 << endl;
+	cout << "val1 + val2 : " << val1 + val2 << endl;
+	cout << "val1 + val3 : " << val1 + val3 << endl;
+	cout << "val3 + val3 : " << val3 + val3 << endl;
 }
 
-void testMinus(){
+void testMinusDeque(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
 	InfInt val4{-15};
 
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val3 : " << val3 << std::endl;
-	std::cout << "val4 : " << val4 << std::endl;
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val3 : " << val3 << endl;
+	cout << "val4 : " << val4 << endl;
 	
 	// same sign
-	std::cout << "val1 - val2 : " << val1 - val2 << std::endl;
-	std::cout << "val2 - val1 : " << val2 - val1 << std::endl;
-	std::cout << "val3 - val4 : " << val3 - val4 << std::endl;
-	std::cout << "val4 - val3 : " << val4 - val3 << std::endl;
+	cout << "val1 - val2 : " << val1 - val2 << endl;
+	cout << "val2 - val1 : " << val2 - val1 << endl;
+	cout << "val3 - val4 : " << val3 - val4 << endl;
+	cout << "val4 - val3 : " << val4 - val3 << endl;
 
 	// same value
-	std::cout << "val1 - val1 : " << val1 - val1 << std::endl;
-	std::cout << "val3 - val3 : " << val3 - val3 << std::endl;
+	cout << "val1 - val1 : " << val1 - val1 << endl;
+	cout << "val3 - val3 : " << val3 - val3 << endl;
 	
 	// different signs
-	std::cout << "val1 - val3 : " << val1 - val3 << std::endl;
-	std::cout << "val3 - val1 : " << val3 - val1 << std::endl;
+	cout << "val1 - val3 : " << val1 - val3 << endl;
+	cout << "val3 - val1 : " << val3 - val1 << endl;
 }
 
-void testMult(){
+void testMultDeque(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -95,70 +83,86 @@ void testMult(){
 	int64_t val6 = -5;
 
 	// values
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val3 : " << val3 << std::endl;
-	std::cout << "val4 : " << val4 << std::endl;
-	std::cout << "val5 : " << val5 << std::endl;
-	std::cout << "val6 : " << val6 << std::endl;
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val3 : " << val3 << endl;
+	cout << "val4 : " << val4 << endl;
+	cout << "val5 : " << val5 << endl;
+	cout << "val6 : " << val6 << endl;
 
 	// same sign
-	std::cout << "val1 * val2 : " << val1 * val2 << std::endl;
-	std::cout << "val3 * val4 : " << val3 * val4 << std::endl;
+	cout << "val1 * val2 : " << val1 * val2 << endl;
+	cout << "val3 * val4 : " << val3 * val4 << endl;
 
 	// different signs
-	std::cout << "val1 * val3 : " << val1 * val3 << std::endl;
+	cout << "val1 * val3 : " << val1 * val3 << endl;
 
 	// with int64_t
-	std::cout << "val1 * val5 : " << val1 * val5 << std::endl;
-	std::cout << "val1 * val6 : " << val1 * val6 << std::endl;
-	std::cout << "val3 * val5 : " << val3 * val5 << std::endl;
-	std::cout << "val3 * val6 : " << val3 * val6 << std::endl;
+	cout << "val1 * val5 : " << val1 * val5 << endl;
+	cout << "val1 * val6 : " << val1 * val6 << endl;
+	cout << "val3 * val5 : " << val3 * val5 << endl;
+	cout << "val3 * val6 : " << val3 * val6 << endl;
 }
 
-void testDivision(){
+void testDivisionDeque(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
 	InfInt val4{-15};
 
 	// values
-	std::cout << "val1 : " << val1 << std::endl;
-	std::cout << "val2 : " << val2 << std::endl;
-	std::cout << "val3 : " << val3 << std::endl;
-	std::cout << "val4 : " << val4 << std::endl;
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val3 : " << val3 << endl;
+	cout << "val4 : " << val4 << endl;
 
 	// same sign
-	std::cout << "val1 / val2 : " << val1 / val2 << std::endl;
-	std::cout << "val2 / val1 : " << val2 / val1 << std::endl;
-	std::cout << "val3 / val4 : " << val3 / val4 << std::endl;
+	cout << "val1 / val2 : " << val1 / val2 << endl;
+	cout << "val2 / val1 : " << val2 / val1 << endl;
+	cout << "val3 / val4 : " << val3 / val4 << endl;
 
 	// different signs
-	std::cout << "val1 / val3 : " << val1 / val3 << std::endl;
-	std::cout << "val3 / val1 : " << val3 / val1 << std::endl;
+	cout << "val1 / val3 : " << val1 / val3 << endl;
+	cout << "val3 / val1 : " << val3 / val1 << endl;
 
 	// divide by 1 and -1
-	std::cout << "val1 / 1 : " << val1 / InfInt{1} << std::endl;
-	std::cout << "val1 / -1 : " << val1 / InfInt{-1} << std::endl;
-	std::cout << "val3 / 1 : " << val3 / InfInt{1} << std::endl;
-	std::cout << "val3 / -1 : " << val3 / InfInt{-1} << std::endl;
+	cout << "val1 / 1 : " << val1 / InfInt{1} << endl;
+	cout << "val1 / -1 : " << val1 / InfInt{-1} << endl;
+	cout << "val3 / 1 : " << val3 / InfInt{1} << endl;
+	cout << "val3 / -1 : " << val3 / InfInt{-1} << endl;
 
 	// division by 0
 	try{
-		std::cout << "val1 / 0 : " << val1 / InfInt{0} << std::endl;
+		cout << "val1 / 0 : " << val1 / InfInt{0} << endl;
 	}
 	catch(DivisionByZeroError &e){
-		std::cerr << "Erreur : " << e.what() << std::endl;
+		cerr << "Erreur : " << e.what() << endl;
 	}
 }
 
+void testBigNumbersDeque(){
+	InfInt val1{INT64_MAX-1};
+	InfInt val2{INT64_MAX-10};
+	InfInt val3{INT64_MIN+1};
+	cout << "val1 : " << val1 << endl;
+	cout << "val2 : " << val2 << endl;
+	cout << "val3 : " << val3 << endl;
+	cout << "val1 + val2 : " << val1 + val2 << endl;
+	cout << "val1 - val2 : " << val1 - val2 << endl;
+	cout << "val1 * val2 : " << val1 * val2 << endl;
+	cout << "val1 / val2 : " << val1 / val2 << endl;
+	cout << "val1 + val3 : " << val1 + val3 << endl;
+	cout << "val1 - val3 : " << val1 - val3 << endl;
+	cout << "val1 * val3 : " << val1 * val3 << endl;
+	cout << "val1 / val3 : " << val1 / val3 << endl;
+}
+
 int main(){
-	//testCout();
-	//testAbs();
-	//testCompare();
-	//testPlus();
-	//testMinus();
-	//testMult();
-	testDivision();
-	return 0;
+	testCoutDeque();
+	testComparisonsDeque();
+	testPlusDeque();
+	testMinusDeque();
+	testMultDeque();
+	testDivisionDeque();
+	testBigNumbersDeque();
 }
