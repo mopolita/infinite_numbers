@@ -1,6 +1,8 @@
 #ifndef INFINT_HPP
 #define INFINT_HPP
 
+#include <iostream>
+#include <list>
 
 namespace inf{
 	class InfInt{
@@ -29,11 +31,6 @@ namespace inf{
 		friend std::strong_ordering operator<=>(const InfInt& a, const InfInt &b);
 		friend bool operator==(const InfInt& a, const InfInt &b) { return a <=> b == 0; }
 		friend bool operator!=(const InfInt& a, const InfInt &b) { return a <=> b != 0; }
-	};
-
-	class DivisionByZeroError : public std::runtime_error{
-	public:
-		DivisionByZeroError() : std::runtime_error("Division by zero"){}
 	};
 }
 

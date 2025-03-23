@@ -1,14 +1,14 @@
 #include <iostream>
-#include <list>
+#include <deque>
 #include <compare>
 #include <iterator>
 #include <cstdint>
 #include "DivisionByZero.hpp"
-#include "infInt.hpp"
+#include "infIntQ.hpp"
 
 namespace inf{
 
-	InfInt::InfInt(int64_t nb) : value{}, positive{nb >= 0} {
+	InfIntQ::InfIntQ(int64_t nb) : value{}, positive{nb >= 0} {
 		if (nb == 0) {
 			value.push_back(0);
 			return;
@@ -20,25 +20,25 @@ namespace inf{
 		}
 	}
 
-	InfInt InfInt::abs() const noexcept{
+	InfIntQ InfIntQ::abs() const noexcept{
 		if (!positive) return -*this;
 		return *this;
 	}
 
-	void InfInt::removeLeadingZeros(){
+	void InfIntQ::removeLeadingZeros(){
 		while (value.size() > 1 && value.front() == 0) {
 			value.pop_front();
 		}
 	}
 
     // Unary negation operator
-    InfInt InfInt::operator-() const noexcept{
-		InfInt result = *this;
+    InfIntQ InfIntQ::operator-() const noexcept{
+		InfIntQ result = *this;
 		result.positive = !result.positive;
         return result;
     }
 
-	std::ostream& operator<<(std::ostream &os, const InfInt &nb) {
+	std::ostream& operator<<(std::ostream &os, const InfIntQ &nb) {
 		if (!nb.positive) os << '-';
 		for (auto it = nb.value.begin(); it != nb.value.end(); ++it) {
 			os << static_cast<int>(*it);
@@ -46,8 +46,8 @@ namespace inf{
 		return os;
 	}
 
-	InfInt operator+(const InfInt &a, const InfInt &b) {
-		InfInt result;
+	InfIntQ operator+(const InfIntQ &a, const InfIntQ &b) {
+		InfIntQ result;
 		
 		// Case: Same signs, simply add their absolute values
 		if (a.positive == b.positive) {	
@@ -77,11 +77,11 @@ namespace inf{
 		return a.abs() - b.abs();
 	}
 
-	InfInt operator-(const InfInt &a, const InfInt &b) {
-		InfInt result;
+	InfIntQ operator-(const InfIntQ &a, const InfIntQ &b) {
+		InfIntQ result;
 
 		// Case 1: Same values, return 0
-		if (a == b) return InfInt{0};
+		if (a == b) return InfIntQ{0};
 
 		// Case 2: Different signs, treat as addition of abs values
 		if (a.positive != b.positive) {
@@ -133,14 +133,14 @@ namespace inf{
 		return result;
 	}
 
-	InfInt operator*(const InfInt &a, int64_t b){
-		if (a == InfInt{0} || b == 0) return InfInt{0};
-		if (a == InfInt{1}) return InfInt{b};
+	InfIntQ operator*(const InfIntQ &a, int64_t b){
+		if (a == InfIntQ{0} || b == 0) return InfIntQ{0};
+		if (a == InfIntQ{1}) return InfIntQ{b};
 		
 		if (b == 1) return a;
 		if (b == -1) return -a;
 
-		InfInt result;
+		InfIntQ result;
 		int64_t carry = 0;
 		int64_t product = 0;
 
@@ -164,17 +164,17 @@ namespace inf{
 		return result;
 	}
 
-	InfInt operator*(const InfInt &a, const InfInt &b){
-		// use the method learned in primary school (requires a InfInt * int_64t)
-		if (a == InfInt{0} || b == InfInt{0}) return InfInt{0};
+	InfIntQ operator*(const InfIntQ &a, const InfIntQ &b){
+		// use the method learned in primary school (requires a InfIntQ * int_64t)
+		if (a == InfIntQ{0} || b == InfIntQ{0}) return InfIntQ{0};
 		
-		if (a == InfInt{1}) return b;
-		if (a == InfInt{-1}) return -b;
+		if (a == InfIntQ{1}) return b;
+		if (a == InfIntQ{-1}) return -b;
 		
-		if (b == InfInt{1}) return a;
-		if (b == InfInt{-1}) return -a;
+		if (b == InfIntQ{1}) return a;
+		if (b == InfIntQ{-1}) return -a;
 
-		InfInt result, a_temp = a.abs(), b_temp = b.abs(), temp;
+		InfIntQ result, a_temp = a.abs(), b_temp = b.abs(), temp;
 		int64_t shift = 0;
 
 		result.positive = (a.positive == b.positive);
@@ -189,17 +189,17 @@ namespace inf{
 		return result;
 	}
 
-	InfInt operator/(const InfInt &a, const InfInt &b){
-		if (b == InfInt{0}) throw DivisionByZeroError{};
-		if (a == InfInt{0} || a.abs() < b.abs()) return InfInt{0};
+	InfIntQ operator/(const InfIntQ &a, const InfIntQ &b){
+		if (b == InfIntQ{0}) throw DivisionByZeroError{};
+		if (a == InfIntQ{0} || a.abs() < b.abs()) return InfIntQ{0};
 		
-		if (b == InfInt{1}) return a;
-		if (b == InfInt{-1}) return -a;
+		if (b == InfIntQ{1}) return a;
+		if (b == InfIntQ{-1}) return -a;
 
-		InfInt result;
+		InfIntQ result;
 		result.positive = (a.positive == b.positive);
-		InfInt a_temp = a.abs(), b_temp = b.abs();
-		InfInt remainder = InfInt{0};
+		InfIntQ a_temp = a.abs(), b_temp = b.abs();
+		InfIntQ remainder = InfIntQ{0};
 
 		for (int8_t digit : a_temp.value) {
 			remainder = remainder * 10 + digit;
@@ -220,7 +220,7 @@ namespace inf{
 		return result;
 	}
 
-	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
+	std::strong_ordering operator<=>(const InfIntQ& a, const InfIntQ& b) {
 
 		if (a.positive != b.positive) return a.positive <=> b.positive;
 		return std::lexicographical_compare_three_way(
