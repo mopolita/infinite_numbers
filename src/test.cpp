@@ -6,12 +6,12 @@
 using namespace std;
 using namespace inf;
 
-void testCoutDeque(){
+void testCout(){
 	InfInt val{85};
 	cout << "nombre : " << val << endl;
 }
 
-void testComparisonsDeque(){
+void testComparisons(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -36,7 +36,7 @@ void testComparisonsDeque(){
 	cout << "val1 >= val3 : " << (val1 >= val3) << endl;
 }
 
-void testPlusDeque(){
+void testPlus(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -48,7 +48,7 @@ void testPlusDeque(){
 	cout << "val3 + val3 : " << val3 + val3 << endl;
 }
 
-void testMinusDeque(){
+void testMinus(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -74,7 +74,7 @@ void testMinusDeque(){
 	cout << "val3 - val1 : " << val3 - val1 << endl;
 }
 
-void testMultDeque(){
+void testMult(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -104,7 +104,7 @@ void testMultDeque(){
 	cout << "val3 * val6 : " << val3 * val6 << endl;
 }
 
-void testDivisionDeque(){
+void testDivision(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -140,7 +140,7 @@ void testDivisionDeque(){
 	}
 }
 
-void testBigNumbersDeque(){
+void testBigNumbers(){
 	InfInt val1{INT64_MAX-1};
 	InfInt val2{INT64_MAX-10};
 	InfInt val3{INT64_MIN+1};
@@ -158,11 +158,11 @@ void testBigNumbersDeque(){
 }
 
 int main(){
-	testCoutDeque();
-	testComparisonsDeque();
-	testPlusDeque();
-	testMinusDeque();
-	testMultDeque();
-	testDivisionDeque();
-	testBigNumbersDeque();
+	//testCout();
+	//testComparisons();
+	//testPlus();
+	//testMinus();
+	//testMult();
+	testDivision();
+	testBigNumbers();
 }
