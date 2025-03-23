@@ -188,6 +188,7 @@ namespace inf{
 		return result;
 	}
 
+/* Redoing the division operation since I get segmentation fault
 	InfInt operator/(const InfInt &a, const InfInt &b){
 		if (b == InfInt{0}) throw DivisionByZeroError{};
 		if (a == InfInt{0} || a.abs() < b.abs()) return InfInt{0};
@@ -218,7 +219,7 @@ namespace inf{
 		result.removeLeadingZeros();
 		return result;
 	}
-
+*/
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
 
 		if (a.positive != b.positive) return a.positive <=> b.positive;
