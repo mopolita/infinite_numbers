@@ -1,5 +1,5 @@
 #include <iostream>
-#include <list>
+#include <deque>
 #include <compare>
 #include <iterator>
 #include <cstdint>

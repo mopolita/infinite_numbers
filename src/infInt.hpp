@@ -2,12 +2,12 @@
 #define INFINT_HPP
 
 #include <iostream>
-#include <list>
+#include <deque>
 
 namespace inf{
 	class InfInt{
 	private:
-		std::list<uint8_t> value;
+		std::deque<uint8_t> value;
 		bool positive;
 		void removeLeadingZeros();
 		InfInt abs() const noexcept;
