@@ -19,7 +19,7 @@ namespace inf{
 		}
 	}
 
-	InfInt InfInt::abs() const {
+	InfInt InfInt::abs() const noexcept{
 		if (!positive) return -*this;
 		return *this;
 	}
@@ -29,6 +29,13 @@ namespace inf{
 			value.pop_front();
 		}
 	}
+
+    // Unary negation operator
+    InfInt InfInt::operator-() const noexcept{
+		InfInt result = *this;
+		result.positive = !result.positive;
+        return result;
+    }
 
 	std::ostream& operator<<(std::ostream &os, const InfInt &nb) {
 		if (!nb.positive) os << '-';
@@ -125,13 +132,6 @@ namespace inf{
 		return result;
 	}
 
-    // Unary negation operator
-    InfInt operator-(const InfInt& a) {
-        InfInt result = a;
-        result.positive = !a.positive; // Flip the sign
-        return result;
-    }
-
 	InfInt operator*(const InfInt &a, int64_t b){
 		if (a == InfInt{0} || b == 0) return InfInt{0};
 		if (a == InfInt{1}) return InfInt{b};
@@ -190,7 +190,7 @@ namespace inf{
 
 	InfInt operator/(const InfInt &a, const InfInt &b){
 		if (b == InfInt{0}) throw DivisionByZeroError{};
-		if (a == InfInt{0}) return InfInt{0};
+		if (a == InfInt{0} || a.abs() < b.abs()) return InfInt{0};
 		
 		if (b == InfInt{1}) return a;
 		if (b == InfInt{-1}) return -a;
@@ -198,17 +198,16 @@ namespace inf{
 		InfInt result;
 		result.positive = (a.positive == b.positive);
 		InfInt a_temp = a.abs(), b_temp = b.abs();
-		InfInt temp;
 		InfInt remainder = InfInt{0};
 
-		for (auto it = a_temp.value.begin(); it != a_temp.value.end(); ++it) {
-			remainder = remainder * 10 + *it;
+		for (int8_t digit : a_temp.value) {
+			remainder = remainder * 10 + digit;
 			if (remainder < b_temp) {
 				result.value.push_back(0);
 				continue;
 			}
 
-			int64_t quotient = 0;
+			int8_t quotient = 0;
 			while (remainder >= b_temp) {
 				remainder = remainder - b_temp;
 				quotient++;
@@ -217,7 +216,6 @@ namespace inf{
 		}
 
 		result.removeLeadingZeros();
-		if (result == InfInt{0}) result.positive = true;
 		return result;
 	}
 

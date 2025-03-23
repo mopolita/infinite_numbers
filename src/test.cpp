@@ -130,17 +130,25 @@ void testDivision(){
 
 	// same sign
 	std::cout << "val1 / val2 : " << val1 / val2 << std::endl;
+	std::cout << "val2 / val1 : " << val2 / val1 << std::endl;
 	std::cout << "val3 / val4 : " << val3 / val4 << std::endl;
 
 	// different signs
 	std::cout << "val1 / val3 : " << val1 / val3 << std::endl;
+	std::cout << "val3 / val1 : " << val3 / val1 << std::endl;
+
+	// divide by 1 and -1
+	std::cout << "val1 / 1 : " << val1 / InfInt{1} << std::endl;
+	std::cout << "val1 / -1 : " << val1 / InfInt{-1} << std::endl;
+	std::cout << "val3 / 1 : " << val3 / InfInt{1} << std::endl;
+	std::cout << "val3 / -1 : " << val3 / InfInt{-1} << std::endl;
 
 	// division by 0
 	try{
 		std::cout << "val1 / 0 : " << val1 / InfInt{0} << std::endl;
 	}
 	catch(DivisionByZeroError &e){
-		std::cout << e.what() << std::endl;
+		std::cerr << "Erreur : " << e.what() << std::endl;
 	}
 }
 

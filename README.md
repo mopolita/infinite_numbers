@@ -24,10 +24,10 @@ the infinite int is made by combining a linked list, containing the actual value
 - ++ and --
 - basic operations, but with = (+=, -=, *=, /=, %=)
 
-## wanna help me ?
-
-If you want to help, you can either find problems and open an issue, or do some programming and open a pull request
-
-## how to use
+## how to use in your projects
 
 for now you can only take the infInt cpp and hpp files and drop them in your project, but I plan on making it a library (or the c++ equivalent to that)
+
+## wanna help me ?
+
+If you want to help, you can either find problems and open an issue, or do some programming then open a pull request
