@@ -8,7 +8,7 @@ using namespace inf;
 
 void testCout(){
 	InfInt val{85};
-	cout << "nombre : " << val << endl;
+	cout << "nombre : " << val << endl << endl;
 }
 
 void testComparisons(){
@@ -17,7 +17,7 @@ void testComparisons(){
 	InfInt val3{-30};
 	cout << "val1 : " << val1 << endl;
 	cout << "val2 : " << val2 << endl;
-	cout << "val2 : " << val2 << endl;
+	cout << "val2 : " << val2 << endl << endl;
 	
 	// same sign
 	cout << "val1 == val2 : " << (val1 == val2) << endl;
@@ -33,7 +33,7 @@ void testComparisons(){
 	cout << "val1 < val3 : " << (val1 < val3) << endl;
 	cout << "val1 > val3 : " << (val1 > val3) << endl;
 	cout << "val1 <= val3 : " << (val1 <= val3) << endl;
-	cout << "val1 >= val3 : " << (val1 >= val3) << endl;
+	cout << "val1 >= val3 : " << (val1 >= val3) << endl << endl;
 }
 
 void testPlus(){
@@ -45,7 +45,7 @@ void testPlus(){
 	cout << "val3 : " << val3 << endl;
 	cout << "val1 + val2 : " << val1 + val2 << endl;
 	cout << "val1 + val3 : " << val1 + val3 << endl;
-	cout << "val3 + val3 : " << val3 + val3 << endl;
+	cout << "val3 + val3 : " << val3 + val3 << endl << endl;
 }
 
 void testMinus(){
@@ -71,7 +71,7 @@ void testMinus(){
 	
 	// different signs
 	cout << "val1 - val3 : " << val1 - val3 << endl;
-	cout << "val3 - val1 : " << val3 - val1 << endl;
+	cout << "val3 - val1 : " << val3 - val1 << endl << endl;
 }
 
 void testMult(){
@@ -101,10 +101,10 @@ void testMult(){
 	cout << "val1 * val5 : " << val1 * val5 << endl;
 	cout << "val1 * val6 : " << val1 * val6 << endl;
 	cout << "val3 * val5 : " << val3 * val5 << endl;
-	cout << "val3 * val6 : " << val3 * val6 << endl;
+	cout << "val3 * val6 : " << val3 * val6 << endl << endl;
 }
 
-void testDivision(){
+/*void testDivision(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -138,7 +138,7 @@ void testDivision(){
 	catch(DivisionByZeroError &e){
 		cerr << "Erreur : " << e.what() << endl;
 	}
-}
+}*/
 
 void testBigNumbers(){
 	InfInt val1{INT64_MAX-1};
@@ -150,19 +150,19 @@ void testBigNumbers(){
 	cout << "val1 + val2 : " << val1 + val2 << endl;
 	cout << "val1 - val2 : " << val1 - val2 << endl;
 	cout << "val1 * val2 : " << val1 * val2 << endl;
-	cout << "val1 / val2 : " << val1 / val2 << endl;
+	//cout << "val1 / val2 : " << val1 / val2 << endl;
 	cout << "val1 + val3 : " << val1 + val3 << endl;
 	cout << "val1 - val3 : " << val1 - val3 << endl;
-	cout << "val1 * val3 : " << val1 * val3 << endl;
-	cout << "val1 / val3 : " << val1 / val3 << endl;
+	cout << "val1 * val3 : " << val1 * val3 << endl << endl;
+	//cout << "val1 / val3 : " << val1 / val3 << endl;
 }
 
 int main(){
-	//testCout();
-	//testComparisons();
-	//testPlus();
-	//testMinus();
-	//testMult();
-	testDivision();
+	testCout();
+	testComparisons();
+	testPlus();
+	testMinus();
+	testMult();
+	//testDivision();
 	testBigNumbers();
 }
