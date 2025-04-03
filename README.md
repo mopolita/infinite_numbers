@@ -28,6 +28,13 @@ the infinite int is made by combining a linked list, containing the actual value
 
 for now you can only take the infInt cpp and hpp files and drop them in your project, but I plan on making it a library (or the c++ equivalent to that)
 
+## compilation
+
+if you want to compile the project yourself, you need cmake.  
+if you already have it, you need to use the command ```cmake -S . -B build``` while being in the project folder in you command prompt on windows  
+or in a terminal in linux.
+you'll then need to compile using the method, depending on your OS.
+
 ## wanna help me ?
 
 If you want to help, you can either find problems and open an issue, or do some programming then open a pull request
