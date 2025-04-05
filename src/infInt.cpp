@@ -69,6 +69,9 @@ namespace inf{
 				carry = sum / 10;
 				result.value.push_front(sum % 10);
 			}
+			// The last 0 appears because infint is initialized with 0 by default, and we use push to add numbers.
+			// So we need to remove it if the result is not 0.
+			if (result != InfInt{0}) result.value.pop_back(); // Remove last 0
 			return result;
 		}
 
@@ -90,44 +93,43 @@ namespace inf{
 		}
 
 		// Case 3: Absolute value of a is bigger than absolute value of b, handle subtraction based on absolute values
-		if (a.abs() > b.abs()) {
-			int borrow = 0, diff = 0;
-			result.positive = a.positive;
-			auto ita = a.value.rbegin();
-			auto itb = b.value.rbegin();
+		const InfInt *larger = &a;
+		const InfInt *smaller = &b;
+		bool resultPositive = a.positive;
 
-			while (itb != b.value.rend()) {
-				diff = *ita - (*itb + borrow);
-				if (diff < 0) {
-					diff += 10;
-					borrow = 1;
-				}
-				else borrow = 0;
-				result.value.push_front(diff);
-				
-				ita++;
-				itb++;
-			}
-
-			// Handle the remaining digits of 'a' after 'b' is exhausted
-			while (ita != a.value.rend()) {
-				diff = *ita - borrow;
-				if (diff < 0) {
-					diff += 10;
-					borrow = 1;
-				}
-				else borrow = 0;
-				result.value.push_front(diff);
-				++ita;
-			}
+		if (a.abs() < b.abs()) {
+			larger = &b;
+			smaller = &a;
+			resultPositive = !b.positive;
 		}
 
-		// Case 4: If abs(b) > abs(a), reverse the order
-		else {
-			result = b - a;
-			result.positive = !result.positive;  // Sign is same as 'a'
-		}
+		int borrow = 0, diff = 0;
+		auto itLarge = larger->value.rbegin();
+		auto itSmall = smaller->value.rbegin();
 
+		while (itLarge != larger->value.rend()) {
+			diff = *itLarge - borrow;
+			if (itSmall != smaller->value.rend()) {
+				diff -= *itSmall;
+				++itSmall;
+			}
+
+			if (diff < 0) {
+				diff += 10;
+				borrow = 1;
+			} 
+			else {
+				borrow = 0;
+			}
+
+			result.value.push_front(diff);
+			++itLarge;
+		}
+		
+		// The last 0 appears because infint is initialized with 0 by default, and we use push to add numbers.
+		// So we need to remove it if the result is not 0.
+		if (result != InfInt{0}) result.value.pop_back(); // Remove last 0
+		result.positive = resultPositive;
 		result.removeLeadingZeros();
 		return result;
 	}
@@ -160,6 +162,9 @@ namespace inf{
 			carry /= 10;
 		}
 
+		// The last 0 appears because infint is initialized with 0 by default, and we use push to add numbers.
+		// So we need to remove it if the result is not 0.
+		if (result != InfInt{0}) result.value.pop_back(); // Remove last 0
 		return result;
 	}
 
@@ -176,7 +181,7 @@ namespace inf{
 		InfInt result, a_temp = a.abs(), b_temp = b.abs(), temp;
 		int64_t shift = 0;
 
-		result.positive = (a.positive == b.positive);
+		
 
 		for (auto it = b_temp.value.rbegin(); it != b_temp.value.rend(); ++it) {
 			temp = a_temp * (*it);
@@ -184,42 +189,48 @@ namespace inf{
 			result = result + temp;
 			shift++;
 		}
-
+		
+		result.positive = (a.positive == b.positive);
 		return result;
 	}
 
-/* Redoing the division operation since I get segmentation fault
+
 	InfInt operator/(const InfInt &a, const InfInt &b){
-		if (b == InfInt{0}) throw DivisionByZeroError{};
-		if (a == InfInt{0} || a.abs() < b.abs()) return InfInt{0};
+		if (b == 0) throw DivisionByZeroError{};
+		if (a == InfInt{0} || a.abs() < b) return InfInt{0};
 		
-		if (b == InfInt{1}) return a;
-		if (b == InfInt{-1}) return -a;
+		if (b == 1) return a;
+		if (b == -1) return -a;
 
-		InfInt result;
-		result.positive = (a.positive == b.positive);
+		InfInt res;
+		res.positive = (a.positive == (b >= 0));
+
 		InfInt a_temp = a.abs(), b_temp = b.abs();
-		InfInt remainder = InfInt{0};
+		InfInt remainder;
 
-		for (int8_t digit : a_temp.value) {
-			remainder = remainder * 10 + digit;
+		while (a_temp > b_temp){
+			std::cout << "a_temp : " << a_temp << std::endl;
+			remainder = remainder * 10 + a_temp.value.front();
+			a_temp.value.pop_front();
 			if (remainder < b_temp) {
-				result.value.push_back(0);
+				res.value.push_back(0);
 				continue;
 			}
 
 			int8_t quotient = 0;
 			while (remainder >= b_temp) {
+				std::cout << "remainder : " << remainder << std::endl;
+				std::cout << "b_temp : " << b_temp << std::endl;
 				remainder = remainder - b_temp;
 				quotient++;
 			}
-			result.value.push_back(quotient);
+			res.value.push_back(quotient);
 		}
 
-		result.removeLeadingZeros();
-		return result;
+		res.removeLeadingZeros();
+		return res;
 	}
-*/
+
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
 
 		if (a.positive != b.positive) return a.positive <=> b.positive;

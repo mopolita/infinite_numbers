@@ -17,7 +17,7 @@ void testComparisons(){
 	InfInt val3{-30};
 	cout << "val1 : " << val1 << endl;
 	cout << "val2 : " << val2 << endl;
-	cout << "val2 : " << val2 << endl << endl;
+	cout << "val3 : " << val3 << endl << endl;
 	
 	// same sign
 	cout << "val1 == val2 : " << (val1 == val2) << endl;
@@ -42,7 +42,7 @@ void testPlus(){
 	InfInt val3{-30};
 	cout << "val1 : " << val1 << endl;
 	cout << "val2 : " << val2 << endl;
-	cout << "val3 : " << val3 << endl;
+	cout << "val3 : " << val3 << endl  << endl;
 	cout << "val1 + val2 : " << val1 + val2 << endl;
 	cout << "val1 + val3 : " << val1 + val3 << endl;
 	cout << "val3 + val3 : " << val3 + val3 << endl << endl;
@@ -57,7 +57,7 @@ void testMinus(){
 	cout << "val1 : " << val1 << endl;
 	cout << "val2 : " << val2 << endl;
 	cout << "val3 : " << val3 << endl;
-	cout << "val4 : " << val4 << endl;
+	cout << "val4 : " << val4 << endl  << endl;
 	
 	// same sign
 	cout << "val1 - val2 : " << val1 - val2 << endl;
@@ -88,7 +88,7 @@ void testMult(){
 	cout << "val3 : " << val3 << endl;
 	cout << "val4 : " << val4 << endl;
 	cout << "val5 : " << val5 << endl;
-	cout << "val6 : " << val6 << endl;
+	cout << "val6 : " << val6 << endl  << endl;
 
 	// same sign
 	cout << "val1 * val2 : " << val1 * val2 << endl;
@@ -104,7 +104,7 @@ void testMult(){
 	cout << "val3 * val6 : " << val3 * val6 << endl << endl;
 }
 
-/*void testDivision(){
+void testDivision(){
 	InfInt val1{15};
 	InfInt val2{40};
 	InfInt val3{-30};
@@ -114,12 +114,13 @@ void testMult(){
 	cout << "val1 : " << val1 << endl;
 	cout << "val2 : " << val2 << endl;
 	cout << "val3 : " << val3 << endl;
-	cout << "val4 : " << val4 << endl;
+	cout << "val4 : " << val4 << endl  << endl;
 
 	// same sign
 	cout << "val1 / val2 : " << val1 / val2 << endl;
 	cout << "val2 / val1 : " << val2 / val1 << endl;
 	cout << "val3 / val4 : " << val3 / val4 << endl;
+	cout << "val4 / val3 : " << val4 / val3 << endl;
 
 	// different signs
 	cout << "val1 / val3 : " << val1 / val3 << endl;
@@ -138,7 +139,7 @@ void testMult(){
 	catch(DivisionByZeroError &e){
 		cerr << "Erreur : " << e.what() << endl;
 	}
-}*/
+}
 
 void testBigNumbers(){
 	InfInt val1{INT64_MAX-1};
@@ -150,18 +151,18 @@ void testBigNumbers(){
 	cout << "val1 + val2 : " << val1 + val2 << endl;
 	cout << "val1 - val2 : " << val1 - val2 << endl;
 	cout << "val1 * val2 : " << val1 * val2 << endl;
-	//cout << "val1 / val2 : " << val1 / val2 << endl;
+	cout << "val1 / val2 : " << val1 / val2 << endl;
 	cout << "val1 + val3 : " << val1 + val3 << endl;
 	cout << "val1 - val3 : " << val1 - val3 << endl;
-	cout << "val1 * val3 : " << val1 * val3 << endl << endl;
-	//cout << "val1 / val3 : " << val1 / val3 << endl;
+	cout << "val1 * val3 : " << val1 * val3 << endl;
+	cout << "val1 / val3 : " << val1 / val3 << endl;
 }
 
 int main(){
-	testCout();
-	testComparisons();
-	testPlus();
-	testMinus();
+	//testCout();
+	//testComparisons();
+	//testPlus();
+	//testMinus();
 	testMult();
 	//testDivision();
 	testBigNumbers();
