@@ -209,7 +209,6 @@ namespace inf{
 		InfInt remainder;
 
 		while (a_temp > b_temp){
-			std::cout << "a_temp : " << a_temp << std::endl;
 			remainder = remainder * 10 + a_temp.value.front();
 			a_temp.value.pop_front();
 			if (remainder < b_temp) {
@@ -219,8 +218,6 @@ namespace inf{
 
 			int8_t quotient = 0;
 			while (remainder >= b_temp) {
-				std::cout << "remainder : " << remainder << std::endl;
-				std::cout << "b_temp : " << b_temp << std::endl;
 				remainder = remainder - b_temp;
 				quotient++;
 			}
