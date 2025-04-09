@@ -27,6 +27,7 @@ namespace inf{
 		friend InfInt operator*(int64_t a, const InfInt &b) { return b*a; }
 		friend InfInt operator*(const InfInt &a, const InfInt &b);
 		friend InfInt operator/(const InfInt &a, const InfInt &b);
+		
 
 		// comparison operators
 		friend std::strong_ordering operator<=>(const InfInt& a, const InfInt& b);

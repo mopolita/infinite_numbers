@@ -164,5 +164,5 @@ int main(){
 	//testMinus();
 	//testMult();
 	testDivision();
-	//testBigNumbers();
+	testBigNumbers();
 }

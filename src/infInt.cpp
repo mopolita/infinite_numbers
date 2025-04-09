@@ -194,29 +194,37 @@ namespace inf{
 		return result;
 	}
 
+	/*
+	How I would do it :
+	1. Check if b is 0, throw an exception if it is.
+	2. Check if a is 0 or if a is smaller than b, return 0 in that case.
+	3. Check if b is 1 or -1, return a or -a respectively.
+	4. Create a new InfInt object to store the result.
+	5. While a_temp is greater than b_temp:
+		- Pop the first digit of a_temp and add it to the remainder.
+		- If the remainder is less than b_temp, push 0 to the result and continue.
+		- Otherwise, subtract b_temp from the remainder and increment the quotient.
 
+	*/
 	InfInt operator/(const InfInt &a, const InfInt &b){
 		if (b == 0) throw DivisionByZeroError{};
-		if (a == InfInt{0} || a.abs() < b) return InfInt{0};
+		if (a == InfInt{0} || a.abs() < b.abs()) return InfInt{0};
 		
 		if (b == 1) return a;
 		if (b == -1) return -a;
 
-		InfInt res;
-		res.positive = (a.positive == (b >= 0));
+		InfInt res, remainder, a_temp = a.abs(), b_temp = b.abs();
+		int8_t quotient = 0;
 
-		InfInt a_temp = a.abs(), b_temp = b.abs();
-		InfInt remainder;
-
-		while (a_temp > b_temp){
-			remainder = remainder * 10 + a_temp.value.front();
+		while (a_temp.value.size() > 0) {
+			remainder.value.push_back(a_temp.value.front());
 			a_temp.value.pop_front();
 			if (remainder < b_temp) {
 				res.value.push_back(0);
 				continue;
 			}
 
-			int8_t quotient = 0;
+			quotient = 0;
 			while (remainder >= b_temp) {
 				remainder = remainder - b_temp;
 				quotient++;
@@ -224,16 +232,21 @@ namespace inf{
 			res.value.push_back(quotient);
 		}
 
+		res.positive = (a.positive == b.positive);
 		res.removeLeadingZeros();
 		return res;
 	}
 
 	std::strong_ordering operator<=>(const InfInt& a, const InfInt& b) {
 
+		InfInt a_tmp = a, b_tmp = b;
+		a_tmp.removeLeadingZeros();
+		b_tmp.removeLeadingZeros();
 		if (a.positive != b.positive) return a.positive <=> b.positive;
+		if (a_tmp.value.size() != b_tmp.value.size()) return a_tmp.value.size() <=> b_tmp.value.size();
 		return std::lexicographical_compare_three_way(
-    		a.value.begin(), a.value.end(),
-        	b.value.begin(), b.value.end()
+    		a_tmp.value.begin(), a_tmp.value.end(),
+        	b_tmp.value.begin(), b_tmp.value.end()
 		);
 	}
 }
