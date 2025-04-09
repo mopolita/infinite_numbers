@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdint>
-#include "DivisionByZero.hpp"
 #include "infInt.hpp"
 
 using namespace std;

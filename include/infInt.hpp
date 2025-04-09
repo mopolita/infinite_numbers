@@ -2,6 +2,7 @@
 #define INFINT_HPP
 
 #include <iostream>
+#include <stdexcept>
 #include <deque>
 
 namespace inf{
@@ -34,6 +35,14 @@ namespace inf{
 		friend bool operator==(const InfInt& a, const InfInt &b) { return a <=> b == 0; }
 		friend bool operator!=(const InfInt& a, const InfInt &b) { return a <=> b != 0; }
 	};
+}
+
+namespace inf{
+
+    class DivisionByZeroError : public std::runtime_error{
+        public:
+            DivisionByZeroError() : std::runtime_error("Division by zero"){}
+        };
 }
 
 #endif // INFINT_HPP

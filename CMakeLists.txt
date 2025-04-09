@@ -1,19 +1,32 @@
 cmake_minimum_required(VERSION 3.10)
+project(InfiniteInt LANGUAGES CXX)
 
-# create the project
-project(InfiniteInt)
-
-# make the compiler use C++20
+# C++20
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# set the output directory for the executable to bin/
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+# Option : Build test executable ?
+option(BUILD_TEST "Build test executable" OFF)
 
-# search for all .cpp files in the src directory and add them to the executable
-file(GLOB_RECURSE SOURCES src/*.cpp)
-add_executable(exe ${SOURCES})
+# Sources files (exclude test.cpp)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
-# add the include directory to the compiler's search path
-target_include_directories(exe PRIVATE include)
+# Create a static library
+add_library(infint STATIC ${SOURCES})
+target_include_directories(infint PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# apply compiler optimizations on release build
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
+
+# specifics optimizations for infint
+target_compile_options(infint PRIVATE $<$<CONFIG:Release>:-O3>)
+
+# If BUILD_TEST is enabled, add the test executable
+if(BUILD_TEST)
+    message(STATUS "Test build enabled.")
+
+    add_executable(test_runner test/test.cpp)
+    target_link_libraries(test_runner PRIVATE infint)
+    target_include_directories(test_runner PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+endif()
